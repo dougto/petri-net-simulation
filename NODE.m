@@ -1,13 +1,14 @@
-function n = NODE(marking, parent)
-  # the NODE function returns one node of a petri tree
-  # every node has the following properties:
-  #
-  # Marking
-  # Parent
-  # Children
+classdef node < handle
+  properties
+    Marking
+    Parent = 0
+    Children = {}
+  end
 
-  n.Marking = marking;
-  n.Parent = parent;
-  n.Children = {};
+  methods
+    function n = node(marking)
+      n.Marking = marking;
+    end
+  end
 
-endfunction
+end

@@ -1,20 +1,22 @@
 function PETRI()
-  # matrix number of columns is equal the number of places
-  # matrix number of rows is equal the number of transitions
-  transitions_input = [1 0 0 0 0;0 1 1 0 1;0 0 1 0 0;0 0 0 1 0];
-  transitions_output = [0 0 0 0 1;0 0 0 0 1;0 0 0 1 0;0 1 1 0 0];
-  marking = [1 2 1 0 1];
-  height = 0;
+  % matrix number of columns is equal the number of places
+  % matrix number of rows is equal the number of transitions
+  transitions_input = [1 0 0;1 0 0];
+  transitions_output = [0 1 0;0 0 1];
+  marking = [2 0 0];
+  initial_height = 0;
   max_height = 10;
 
-  calculateMarkings(transitions_input, transitions_output, marking, height, max_height)
+  root_node = node(marking);
+
+  calculateMarkings(transitions_input, transitions_output, marking, initial_height, max_height, root_node)
+
+  tree.plot(root_node);
 endfunction
 
-function calculateMarkings(transitions_input, transitions_output, marking, height, max_height)
-  # print possible markings
+function calculateMarkings(transitions_input, transitions_output, marking, height, max_height, current_node)
   transitions_number = size(transitions_input)(1);
   places_number = size(transitions_input)(2);
-  transition_is_enabled = 0;
 
   height = height + 1;
 
@@ -28,20 +30,20 @@ function calculateMarkings(transitions_input, transitions_output, marking, heigh
     endfor
 
     if transition_is_enabled == 1
-      # disp("transition enabled: "), disp(j)
-
       new_marking = zeros(1, places_number);
 
       new_marking = marking - transitions_input(j,:) + transitions_output(j,:);
 
-      disp("height: "), disp(height), disp("possible marking: "), disp(new_marking)
+      new_node = node(new_marking);
+
+      current_node.Children(j) = new_node;
 
       if height == max_height
         disp("reached maximum search height")
         return
       endif
 
-      calculateMarkings(transitions_input, transitions_output, new_marking, height, max_height);
+      calculateMarkings(transitions_input, transitions_output, new_marking, height, max_height, new_node);
     endif
   endfor
 endfunction
