@@ -1,9 +1,13 @@
-function PETRI()
+function PETRI(transitions_input, transitions_output, marking)
   % matrix number of columns is equal the number of places
   % matrix number of rows is equal the number of transitions
-  transitions_input = [1 0 0;1 0 0];
-  transitions_output = [0 1 0;0 0 1];
-  marking = [2 0 0];
+  %
+  % example inputs:
+  %
+  % transitions_input = [1 0 0;1 0 0];
+  % transitions_output = [0 1 0;0 0 1];
+  % marking = [2 1 0];
+
   initial_height = 0;
   max_height = 10;
 
@@ -11,7 +15,8 @@ function PETRI()
 
   calculateMarkings(transitions_input, transitions_output, marking, initial_height, max_height, root_node, root_node)
 
-  tree.plot(root_node);
+  % tree.printMarkings(root_node)
+  tree.plot(root_node)
 end
 
 function calculateMarkings(transitions_input, transitions_output, marking, height, max_height, current_node, petri_tree)
