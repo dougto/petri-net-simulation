@@ -42,7 +42,7 @@ classdef tree
           numberOfchildren = size(parent_node.Children)(2);
 
           if rnode == 1
-            nodevals = [parent_node.Marking];
+            nodevals = [strcat('[',num2str(parent_node.Marking),']')];
             transitions(1) = '-';
           end
 
@@ -51,7 +51,7 @@ classdef tree
             if !isempty(parent_node.Children{1,ii})
               [tb, node, nv, tr] = treebuilder(parent_node.Children{1,ii}, node);
               out = [out, rnode, tb];
-              nodevals = [nodevals, parent_node.Children{1,ii}.Marking, nv];
+              nodevals = [nodevals, strcat('[',num2str(parent_node.Children{1,ii}.Marking),']'), nv];
               transitions = [transitions, strcat('t',num2str(ii)), tr];
             end
           end

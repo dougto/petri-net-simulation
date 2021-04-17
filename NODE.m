@@ -1,7 +1,6 @@
 classdef node < handle
   properties
     Marking
-    Parent = 0
     Children = {}
   end
 

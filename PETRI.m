@@ -34,12 +34,12 @@ function calculateMarkings(transitions_input, transitions_output, marking, heigh
       end
     end
 
-    if transition_is_enabled == 1
+    if transition_is_enabled
       new_marking = zeros(1, places_number);
 
       new_marking = marking - transitions_input(j,:) + transitions_output(j,:);
 
-      if tree.nodeExists(petri_tree, new_marking) == 0
+      if !tree.nodeExists(petri_tree, new_marking)
         new_node = node(new_marking);
 
         current_node.Children(j) = new_node;
