@@ -39,11 +39,13 @@ function calculateMarkings(transitions_input, transitions_output, marking, heigh
 
       new_marking = marking - transitions_input(j,:) + transitions_output(j,:);
 
-      if !tree.nodeExists(petri_tree, new_marking)
-        new_node = node(new_marking);
+      node_exists = tree.nodeExists(petri_tree, new_marking);
 
-        current_node.Children(j) = new_node;
+      new_node = node(new_marking);
 
+      current_node.Children(j) = new_node;
+
+      if !node_exists
         if height == max_height
           disp("reached maximum search height")
           return
