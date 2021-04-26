@@ -29,7 +29,9 @@ classdef tree
 
       for i=1:length(x)
         text(x(i),y(i),labels(i),'FontSize',18)
-        text(x(i),y(i)+0.3,transitions(i),'FontSize',18)
+        if !strcmp(transitions(i),'-')
+          text(x(i),y(i)+0.3,transitions(i),'FontSize',18)
+        end
       end
 
       function [treearray, nodevals, transitions] = getTreeArrayWithLabel(parent_node)
@@ -51,7 +53,7 @@ classdef tree
               node = node + 1;
               [tb, node, nv, tr] = treebuilder(parent_node.Children{1,ii}, node);
               out = [out, rnode, tb];
-              nodevals = [nodevals, strcat('[',num2str(parent_node.Children{1,ii}.Marking),']'), nv];
+              nodevals = [nodevals, strrep(strcat('[',num2str(parent_node.Children{1,ii}.Marking),']'), '-1', 'w'), nv];
               transitions = [transitions, strcat('t',num2str(ii)), tr];
             end
           end
