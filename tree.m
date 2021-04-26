@@ -82,5 +82,23 @@ classdef tree
         r = 0;
       end
     end
+
+    function markingsPath = getMarkingsPath(current_node)
+      accumulator = {};
+
+      aux(current_node, 1);
+
+      markingsPath = accumulator;
+
+      function aux(current_node, counter)
+        accumulator(counter) = current_node.Marking;
+
+        if current_node.Root
+          return
+        end
+
+        aux(current_node.Parent, counter + 1);
+      end
+    end
   end
 end
