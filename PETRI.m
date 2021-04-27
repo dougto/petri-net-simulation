@@ -1,29 +1,15 @@
 function PETRI(transitions_input, transitions_output, marking)
-  % matrix number of columns is equal the number of places
-  % matrix number of rows is equal the number of transitions
-  %
-  % example inputs:
-  %
-  % transitions_input = [1 0 0;1 0 0];
-  % transitions_output = [0 1 0;0 0 1];
-  % marking = [2 1 0];
-
-  initial_height = 0;
-  max_height = 1000;
-
   root_node = node(marking, 0, 1);
 
-  calculateMarkings(transitions_input, transitions_output, marking, initial_height, max_height, root_node, root_node)
+  calculateMarkings(transitions_input, transitions_output, marking, root_node, root_node)
 
   % tree.printMarkings(root_node)
   tree.plot(root_node)
 end
 
-function calculateMarkings(transitions_input, transitions_output, marking, height, max_height, current_node, petri_tree)
+function calculateMarkings(transitions_input, transitions_output, marking, current_node, petri_tree)
   transitions_number = size(transitions_input)(1);
   places_number = size(transitions_input)(2);
-
-  height = height + 1;
 
   for jj = 1:transitions_number
     transition_is_enabled = 1;
@@ -50,12 +36,7 @@ function calculateMarkings(transitions_input, transitions_output, marking, heigh
       current_node.Children(jj) = new_node;
 
       if !node_exists
-        if height == max_height
-          disp("reached maximum search height")
-          return
-        end
-
-        calculateMarkings(transitions_input, transitions_output, new_marking, height, max_height, new_node, petri_tree);
+        calculateMarkings(transitions_input, transitions_output, new_marking, new_node, petri_tree);
       end
     end
   end
